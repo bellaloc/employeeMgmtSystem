@@ -39,6 +39,32 @@ class EmployeeQueries {
       });
     });
   }
+
+  static async updateEmployeeManager(employeeId, managerId) {
+    return new Promise((resolve, reject) => {
+      const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
+      connection.query(query, [managerId, employeeId], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  static async getEmployeesByManager(managerId) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM employee WHERE manager_id = ?';
+      connection.query(query, [managerId], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
 }
 
 module.exports = EmployeeQueries;
