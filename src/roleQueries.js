@@ -1,4 +1,4 @@
-const connection = require('./db/connection');
+const connection = require('../db/connection.js'); 
 
 class RoleQueries {
   static async getAllRoles() {
@@ -6,7 +6,7 @@ class RoleQueries {
       const query = 'SELECT * FROM role';
       connection.query(query, (err, results) => {
         if (err) {
-          reject(err);
+          reject(err); 
         } else {
           resolve(results);
         }

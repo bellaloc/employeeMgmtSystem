@@ -1,13 +1,5 @@
 const inquirer = require("inquirer");
-const {
-  viewAllDepartments,
-  viewAllRoles,
-  viewAllEmployees,
-  addDepartment,
-  addRole,
-  addEmployee,
-  updateEmployeeRole,
-} = require("./src/inquirerPrompts");
+const inquirerPrompts = require("./src/inquirerPrompts");
 
 const startApp = async () => {
   try {
@@ -31,25 +23,25 @@ const startApp = async () => {
 
     switch (action) {
       case "View all departments":
-        viewAllDepartments();
+        await inquirerPrompts.viewAllDepartments();
         break;
       case "View all roles":
-        viewAllRoles();
+        await inquirerPrompts.viewAllRoles();
         break;
       case "View all employees":
-        viewAllEmployees();
+        await inquirerPrompts.viewAllEmployees();
         break;
       case "Add a department":
-        addDepartment();
+        await inquirerPrompts.addDepartment();
         break;
       case "Add a role":
-        addRole();
+        await inquirerPrompts.addRole();
         break;
       case "Add an employee":
-        addEmployee();
+        await inquirerPrompts.addEmployee();
         break;
       case "Update an employee role":
-        updateEmployeeRole();
+        await inquirerPrompts.updateEmployeeRole();
         break;
       case "Exit":
         console.log("Exiting the application.");

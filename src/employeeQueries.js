@@ -1,69 +1,54 @@
-const connection = require('./db/connection');
+const connection = require('../db/connection');
 
 class EmployeeQueries {
   static async getAllEmployees() {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM employee';
-      connection.query(query, (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results);
-        }
-      });
-    });
+      const results = await connection.query(query);
+      return results;
+    } catch (err) {
+      throw err;
+    }
   }
 
   static async addEmployee(firstName, lastName, roleId, managerId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
-      connection.query(query, [firstName, lastName, roleId, managerId], (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+      const result = await connection.query(query, [firstName, lastName, roleId, managerId]);
+      return result;
+    } catch (err) {
+      throw err;
+    }
   }
 
   static async updateEmployeeRole(employeeId, roleId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
-      connection.query(query, [roleId, employeeId], (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+      const result = await connection.query(query, [roleId, employeeId]);
+      return result;
+    } catch (err) {
+      throw err;
+    }
   }
 
   static async updateEmployeeManager(employeeId, managerId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
-      connection.query(query, [managerId, employeeId], (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
+      const result = await connection.query(query, [managerId, employeeId]);
+      return result;
+    } catch (err) {
+      throw err;
+    }
   }
 
   static async getEmployeesByManager(managerId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM employee WHERE manager_id = ?';
-      connection.query(query, [managerId], (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results);
-        }
-      });
-    });
+      const results = await connection.query(query, [managerId]);
+      return results;
+    } catch (err) {
+      throw err;
+    }
   }
 }
 
