@@ -14,6 +14,23 @@ class InquirerPrompts {
     }
   }
 
+  static async addDepartment() {
+    const { departmentName } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter the name of the department:',
+      },
+    ]);
+
+    try {
+      const result = await DepartmentQueries.addDepartment(departmentName);
+      console.log('Department added successfully.');
+    } catch (err) {
+      console.error('An error occurred:', err);
+    }
+  }
+
   static async viewAllRoles() {
     try {
       const roles = await RoleQueries.getAllRoles();
