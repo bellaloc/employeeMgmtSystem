@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -29,7 +29,6 @@ connection.connect((err) => {
 
     console.log('Query results:', results);
 
-    
     connection.end();
   });
 });

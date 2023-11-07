@@ -8,8 +8,8 @@ class EmployeeQueries {
                     'LEFT JOIN role ON employee.role_id = role.id ' +
                     'LEFT JOIN department ON role.department_id = department.id ' +
                     'LEFT JOIN employee AS manager ON employee.manager_id = manager.id';
-      const results = await connection.query(query);
-      return results;
+      const [rows, fields] = await connection.execute(query);
+      return rows;
     } catch (err) {
       throw err;
     }
@@ -18,7 +18,7 @@ class EmployeeQueries {
   static async addEmployee(firstName, lastName, roleId, managerId) {
     try {
       const query = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
-      const result = await connection.query(query, [firstName, lastName, roleId, managerId]);
+      const [result] = await connection.execute(query, [firstName, lastName, roleId, managerId]);
       return result;
     } catch (err) {
       throw err;
@@ -28,7 +28,7 @@ class EmployeeQueries {
   static async updateEmployeeRole(employeeId, roleId) {
     try {
       const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
-      const result = await connection.query(query, [roleId, employeeId]);
+      const [result] = await connection.execute(query, [roleId, employeeId]);
       return result;
     } catch (err) {
       throw err;
@@ -38,7 +38,7 @@ class EmployeeQueries {
   static async updateEmployeeManager(employeeId, managerId) {
     try {
       const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
-      const result = await connection.query(query, [managerId, employeeId]);
+      const [result] = await connection.execute(query, [managerId, employeeId]);
       return result;
     } catch (err) {
       throw err;
@@ -53,8 +53,8 @@ class EmployeeQueries {
                     'LEFT JOIN department ON role.department_id = department.id ' +
                     'LEFT JOIN employee AS manager ON employee.manager_id = manager.id ' +
                     'WHERE employee.manager_id = ?';
-      const results = await connection.query(query, [managerId]);
-      return results;
+      const [rows, fields] = await connection.execute(query, [managerId]);
+      return rows;
     } catch (err) {
       throw err;
     }
