@@ -3,7 +3,11 @@ const connection = require('../db/connection');
 class EmployeeQueries {
   static async getAllEmployees() {
     try {
-      const query = 'SELECT * FROM employee';
+      const query = 'SELECT employee.id, employee.first_name, employee.last_name, role.title AS job_title, department.name AS department, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager ' +
+                    'FROM employee ' +
+                    'LEFT JOIN role ON employee.role_id = role.id ' +
+                    'LEFT JOIN department ON role.department_id = department.id ' +
+                    'LEFT JOIN employee AS manager ON employee.manager_id = manager.id';
       const results = await connection.query(query);
       return results;
     } catch (err) {
@@ -43,7 +47,12 @@ class EmployeeQueries {
 
   static async getEmployeesByManager(managerId) {
     try {
-      const query = 'SELECT * FROM employee WHERE manager_id = ?';
+      const query = 'SELECT employee.id, employee.first_name, employee.last_name, role.title AS job_title, department.name AS department, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager ' +
+                    'FROM employee ' +
+                    'LEFT JOIN role ON employee.role_id = role.id ' +
+                    'LEFT JOIN department ON role.department_id = department.id ' +
+                    'LEFT JOIN employee AS manager ON employee.manager_id = manager.id ' +
+                    'WHERE employee.manager_id = ?';
       const results = await connection.query(query, [managerId]);
       return results;
     } catch (err) {
