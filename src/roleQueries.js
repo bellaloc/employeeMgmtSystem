@@ -1,24 +1,30 @@
-const connection = require('../db/connection.js');
+const connection = require('../db/connection');
 
 class RoleQueries {
   static async getAllRoles() {
-    try {
+    return new Promise((resolve, reject) => {
       const query = 'SELECT * FROM role';
-      const [results] = await connection.query(query);
-      return results;
-    } catch (err) {
-      throw err;
-    }
+      connection.query(query, (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
   }
 
   static async addRole(roleTitle, roleSalary, departmentId) {
-    try {
+    return new Promise((resolve, reject) => {
       const query = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
-      const [result] = await connection.query(query, [roleTitle, roleSalary, departmentId]);
-      return result;
-    } catch (err) {
-      throw err;
-    }
+      connection.query(query, [roleTitle, roleSalary, departmentId], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
   }
 }
 
